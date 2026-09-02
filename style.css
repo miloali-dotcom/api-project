@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@100&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Alegreya Sans SC", sans-serif;
+}
+
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  display: flex;
+}
+
+li {
+  list-style: none;
+}
+
+.teal {
+  color: #52b7b3;
+}
+
+nav {
+  height: 80px;
+  display: flex;
+}
+
+.container {
+  padding: 80px 0;
+}
+
+.row {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nav__container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.nav__logo {
+  font-size: 40px;
+  color: #52b7b3;
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.nav__logo--title {
+  font-size: 24px;
+  margin-left: 12px;
+  color: #201e1f;
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 2px;
+}
+
+.nav__link {
+  padding-left: 12px;
+  font-size: 20px;
+  color: #201e1f;
+  border-bottom: 2px solid transparent;
+  position: relative;
+  transition: all 300ms ease;
+  padding: 8px;
+}
+
+.nav__link--primary {
+  margin: 0 auto;
+  padding: 10px 32px;
+  color: white;
+  margin-top: 2px;
+  border: 2px solid #52b7b3;
+  background-color: #52b7b3;
+}
+
+.header__row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.header__description {
+  text-align: center;
+}
+
+h1 {
+  font-size: 48px;
+  color: #201e1f;
+}
+
+button {
+  cursor: pointer;
+}
+
+.header__search {
+  width: 100%;
+  max-width: 448px;
+  height: 68px;
+  padding-top: 80px;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.header__search--input {
+  width: 100%;
+  position: absolute;
+  border: 2px solid #52b7b3;
+  padding: 20px 192px 20px 32px;
+  transition: all 300ms ease;
+}
+
+.header__search--input:hover {
+  border: 2px solid #201e1f;
+}
+
+.header__search--btn {
+  z-index: 2;
+  margin: 8px;
+  height: 48px;
+  width: 160px;
+  border: 2px solid #201e1f;
+  background-color: #201e1f;
+  color: white;
+  transition: all 300ms ease;
+}
+
+.header__search--btn:hover {
+  border-color: #52b7b3;
+  background-color: #52b7b3;
+  transition: all 300ms ease;
+}
