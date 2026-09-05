@@ -1,48 +1,52 @@
-// API: https://api.artic.edu/api/v1/artworks/search?q=armor
+// API: https://api.artic.edu/api/v1/artworks/${id}/search?q=armor&fields=id,title,artist_display,date_display,image_id&limit=12
 
 // Img API: https://www.artic.edu/iiif/2/{identifier}/full/843,/0/default.jpg
 
-const headers = {
-  'AIC-User-Agent': 'aic-bash (yali@artic.edu)'
-};
+const apiUrl = 'https://api.artic.edu/api/v1/artworks/${id}/search?q=armor&fields=id,title,artist_display,date_display,image_id&limit=6';
 
-const armorListEl = document.querySelector(".armor__list");
-
-async function onSearchChange(event) {
-  const id = event.target.value;
-  renderArmor(id);
+async function renderArmor(filter) {
+  const armorContainer = document.getElementById('armor__loading');
+  armorContainer.classList += ' armor__loading';
+  if (!armor) {
+    armor = await getArmor();
+  }
+  armorContainer.classList.remove('armor__loading');
 }
 
-async function renderArmor(id) {
-  const armor = await fetch(`https://api.artic.edu/api/v1/artworks/${id}/search?q=armor&fields=id,title,artist_display,date_display,image_id&limit=12`);
-  const armorData = await armor.json();
-  armorListEl.innerHTML = armorData.map(armor => armorHTML(armor)).join('');
-}
-
-function armorHTML(armor) {
-  return 
-    `<div class="armor">
-      <div class="armor__card">
-        <div class="armor__card--img">
-        ${armor.image_id}
-        </div>
-        <div class="armor__card--details">
-          <h2 class="armor__card--title">${armor.title}</h2>
-          <p class="armor__card--description">${armor.artist} • ${armor.date}</p>
-        </div>
-      </div>
-    </div>`
-}
-
-//EXAMPLE DATA
-function getArmor() {
-  return [
-    {
-      id: 106377,
-      image_id: "https://www.artic.edu/iiif/2/0cf7f71b-f924-2c8f-c909-708bb2b9f4fc/full/1686,/0/default.jpg",
-      title: "Portions of a Field Armor",
-      artist_display: "Jacob Halder",
-      date_display: "c. 1588",
+async function getArmor(id) {
+  try {
+    const response = await fetch(`apiUrl`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-  ]
+    const data = await response.json();
+    return displayArmor(data.data);
+  }
+  catch (error) {
+    console.error('Error fetching armor data:', error);
+    document.getElementById('armor__list').innerHTML = '<p>Sorry, there was an error loading the armor data. Please try again later.</p>';
+  }
 }
+
+function displayArmor(armorList) {
+  const armorContainer = document.getElementById('armor__list');
+  armorContainer.innerHTML = 
+  `<div class="armor">
+        <div class="armor__card">
+          <img class="armor__card--img" src="https://www.artic.edu/iiif/2/${armor.image_id}/full/843,/0/default.jpg" alt="${armor.title}">
+          <div class="armor__card--details">
+            <h2 class="armor__card--title">${armor.title}</h2>
+            <p class="armor__card--description">${armor.artist_display} • ${armor.date_display}</p>
+          </div>
+        </div>
+      </div>`;
+
+  if (!armorList || armorList.length === 0) {
+    armorContainer.innerHTML = '<p>No armor found.</p>';
+    return;
+  }
+}
+
+setTimeout(() => {
+  renderArmor();
+}, 1000);

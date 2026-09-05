@@ -38,6 +38,8 @@ nav {
 }
 
 .row {
+  display: flex;
+  align-items: center;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -48,6 +50,7 @@ nav {
   max-width: 1200px;
   padding: 0 24px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin: 0 auto;
 }
@@ -60,6 +63,12 @@ nav {
   margin: 8px 0;
 }
 
+.nav__logo:hover {
+  color: #201e1f;
+  cursor: pointer;
+  transition: all 300ms ease;
+}
+
 .nav__logo--title {
   font-size: 24px;
   margin-left: 12px;
@@ -68,23 +77,41 @@ nav {
 
 .nav__links {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding-bottom: 2px;
 }
 
 .nav__link {
-  padding-left: 12px;
+  padding: 24px;
   font-size: 20px;
   color: #201e1f;
   border-bottom: 2px solid transparent;
   position: relative;
   transition: all 300ms ease;
-  padding: 8px;
+}
+
+.nav__link:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 2px;
+  width: 100%;
+  background: #52b7b3;
+  transition: opacity 300ms, transform 300ms;
+  opacity: 0;
+}
+
+.nav__link:hover:after {
+  opacity: 1;
+  transform: translate3d(0, 0.2em, 0);
 }
 
 .nav__link--primary {
   margin: 0 auto;
   padding: 10px 32px;
+  font-size: 20px;
   color: white;
   margin-top: 2px;
   border: 2px solid #52b7b3;
@@ -92,8 +119,8 @@ nav {
 }
 
 .nav__link--primary:hover {
-  background-color: transparent;
-  color: #52b7b3;
+  background-color: #201e1f;
+  border-color: #201e1f;
   transition: all 300ms ease;
 }
 
@@ -186,6 +213,7 @@ ARMOR
 
 .armor:hover {
   transform: scale(1.05);
+  cursor: pointer;
   transition: all 300ms ease;
 }
 
@@ -195,3 +223,33 @@ ARMOR
   object-fit: cover;
 }
 
+.armor__loading {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 0;
+}
+
+.armor__loading--circle {
+  font-size: 48px;
+  color: #52b7b3;
+  display: none !important;
+}
+
+.armor__loading .armor__loading--circle {
+  display: block !important;
+}
+
+.fa-circle-notch {
+  animation: spin 1s linear infinite;
+}
+
+//@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
