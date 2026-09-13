@@ -1,4 +1,4 @@
-// API: https://api.artic.edu/api/v1/artworks/${id}/search?q=armor&fields=id,title,artist_display,date_display,image_id&limit=12
+// API: https://api.artic.edu/api/v1/artworks/search?q=${searchTerm}&fields=title,artist_display,date_display,image_id
 
 // Img API: https://www.artic.edu/iiif/2/{identifier}/full/843,/0/default.jpg
 
@@ -10,10 +10,9 @@ async function fetchArmorData(searchTerm) {
 
 function displayArmor(data) {
     const resultsContainer = document.getElementById('resultsContainer');
-    resultsContainer.innerHTML = ''; 
 
     const limitedResults = data.slice(0, 6);
-
+    
     limitedResults.forEach(armor => {
         const armorContainer = document.createElement('div');
         armorContainer.className = 'armor-container';
@@ -22,6 +21,10 @@ function displayArmor(data) {
         armorImage.src = `https://www.artic.edu/iiif/2/${armor.image_id}/full/843,/0/default.jpg`;
         armorImage.alt = armor.title || 'Armor Image';
         armorImage.className = 'armor-image';
+
+        const armorTitle = document.createElement('h3');
+        armorTitle.className = 'armor-title';
+        armorTitle.textContent = armor.title || 'Untitled';
 
         const artistName = document.createElement('h3');
         artistName.className = 'artist-name';
