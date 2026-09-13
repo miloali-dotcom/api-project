@@ -14,31 +14,16 @@ function displayArmor(data) {
     const limitedResults = data.slice(0, 6);
     
     limitedResults.forEach(armor => {
-        const armorContainer = document.createElement('div');
-        armorContainer.className = 'armor-container';
+        const armorContainer = document.getElementClassName('armor-container');
 
-        const armorImage = document.createElement('img');
+        const armorImage = document.getElementClassName('armor-image');
         armorImage.src = `https://www.artic.edu/iiif/2/${armor.image_id}/full/843,/0/default.jpg`;
-        armorImage.alt = armor.title || 'Armor Image';
-        armorImage.className = 'armor-image';
 
-        const armorTitle = document.createElement('h3');
-        armorTitle.className = 'armor-title';
-        armorTitle.textContent = armor.title || 'Untitled';
+        const armorTitle = document.getElementClassName('armor-title');
 
-        const artistName = document.createElement('h3');
-        artistName.className = 'artist-name';
-        artistName.textContent = armor.artist_display || 'Unknown Artist';
+        const artistName = document.getElementClassName('armor-artist');
 
-        const dateMade = document.createElement('p');
-        dateMade.className = 'date-made';
-        dateMade.textContent = armor.date_display || 'Date Unknown';
-
-        armorContainer.appendChild(armorImage);
-        armorContainer.appendChild(artistName);
-        armorContainer.appendChild(dateMade);
-
-        resultsContainer.appendChild(armorContainer);
+        const dateMade = document.getElementClassName('armor-date');
     });
 }
 
