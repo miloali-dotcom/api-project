@@ -6,7 +6,7 @@
   <title>Armory</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://kit.fontawesome.com/2348052fee.js" crossorigin="anonymous"></script>
-  <script src="index.js"></script>
+  <script src="index.js" defer></script>
 </head>
 <body>
   <section id="landing">
@@ -21,10 +21,10 @@
           <div class="nav__links">
             <ul>
               <li>
-                <a href="#" class="nav__link">Home</a>
+                <a href="#" class="nav__link link__hover-effect">Home</a>
               </li>
               <li>
-                <a href="#" class="nav__link">About</a>
+                <a href="#" class="nav__link link__hover-effect">About</a>
               </li>
               <li>
                 <a href="#" class="nav__link--primary">Contact</a>
@@ -40,50 +40,15 @@
           <h1 class="header__description">
             Database of Arms and Armor at the <span class="teal">Art Institute of Chicago</span>
           </h1>
-          <div class="header__search">
-            <input type="text" class="header__search--input" placeholder="ex: burgonet">
-            <button class="header__search--btn">Search</button>
+          <div class="search-container">
+            <input type="text" id="searchInput" placeholder="ex: burgonet">
+            <button id="searchButton" onclick="fetchArmorData()">Search</button>
           </div>
         </div>
       </div>
     </header>
-    <div class="armor__loading">
-          <i class="fa-solid fa-circle-notch armor__loading--circle"></i>
-        </div>
-    <div class="container armor__container">
-      <div class="row armor__row">
-        <div class="armor__list">
-          <div class="armor">
-            <img class="armor__img" src="" alt="Armor Image">
-            <div class="armor__details">
-              <h2 class="armor__title">Armor Title</h2>
-              <p class="armor__card--description">Armor Artist and Date</p>
-            </div>
-          </div>
-          <div class="armor">
-            <img class="armor__img" src="" alt="Armor Image">
-            <div class="armor__details">
-              <h2 class="armor__title">Armor Title</h2>
-              <p class="armor__card--description">Armor Artist and Date</p>
-            </div>
-          </div>
-          <div class="armor">
-            <img class="armor__img" src="" alt="Armor Image">
-            <div class="armor__details">
-              <h2 class="armor__title">Armor Title</h2>
-              <p class="armor__card--description">Armor Artist and Date</p>
-            </div>
-          </div>
-          <div class="armor">
-            <img class="armor__img" src="" alt="Armor Image">
-            <div class="armor__details">
-              <h2 class="armor__title">Armor Title</h2>
-              <p class="armor__card--description">Armor Artist and Date</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    
+    <div id="resultsContainer"></div>
   </section>
 </body>
 </html>
