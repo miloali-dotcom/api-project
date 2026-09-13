@@ -20,7 +20,7 @@ function displayArmor(data) {
       image.className = 'armor-image';
       image.alt = armor.title || 'Armor image';
       if (armor.image_id) {
-        image.src = `https://www.artic.edu/iiif/2/${armor.image_id}/full/843,/0/default.jpg`;
+        image.src = `https://www.artic.edu/iiif/2/{identifier}/full/200,/0/default.jpg`;
         card.appendChild(image);
       }
       const title = document.createElement('h3');
