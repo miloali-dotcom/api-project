@@ -10,27 +10,56 @@ async function fetchArmorData(searchTerm) {
 
 function displayArmor(data) {
     const resultsContainer = document.getElementById('resultsContainer');
+    resultsContainer.innerHTML = '';
+    //const limitedResults = data.slice(0, 6);
+    data.slice(0, 6).forEach(armor => {
+      const card = document.createElement('div');
+      card.className = 'armor-container';
 
-    const limitedResults = data.slice(0, 6);
+      const image = document.createElement('img');
+      image.className = 'armor-image';
+      image.alt = armor.title || 'Armor image';
+      if (armor.image_id) {
+        image.src = `https://www.artic.edu/iiif/2/${armor.image_id}/full/843,/0/default.jpg`;
+        card.appendChild(image);
+      }
+      const title = document.createElement('h3');
+      title.className = 'armor-title';
+      title.textContent = armor.title || 'Untitled';
+
+      const artist = document.createElement('h4');
+      artist.className = 'artist-name';
+      artist.textContent = armor.artist_display || 'Artist unknown';
+
+      const date = document.createElement('p');
+      date.className = 'date-made';
+      date.textContent = armor.date_display || 'Date unknown';
+
+      card.appendChild(title);
+      card.appendChild(artist);
+      card.appendChild(date);
+      resultsContainer.appendChild(card);
     
-    limitedResults.forEach(armor => {
-        const armorContainer = document.getElementClassName('armor-container');
+    //limitedResults.forEach(armor => {
+        // const armorContainer = document.getElementClassName('armor-container');
 
-        const armorImage = document.getElementClassName('armor-image');
-        armorImage.src = `https://www.artic.edu/iiif/2/${armor.image_id}/full/843,/0/default.jpg`;
+        // const armorImage = document.getElementClassName('armor-image');
+        // armorImage.src = `https://www.artic.edu/iiif/2/${armor.image_id}/full/843,/0/default.jpg`;
 
-        const armorTitle = document.getElementClassName('armor-title');
+        // const armorTitle = document.getElementClassName('armor-title');
 
-        const artistName = document.getElementClassName('armor-artist');
+        // const artistName = document.getElementClassName('armor-artist');
 
-        const dateMade = document.getElementClassName('armor-date');
+        // const dateMade = document.getElementClassName('armor-date');
     });
 }
 
 document.getElementById('searchButton').addEventListener('click', async () => {
     const searchInput = document.getElementById('searchInput').value;
     const armorData = await fetchArmorData(searchInput);
+    console.log('api results:', armorData);
     displayArmor(armorData);
+    console.log('cards on page:', document.getElementById('resultsContainer').children.length)
 });
 
 document.getElementById('searchInput').addEventListener('keypress', function (e) {
