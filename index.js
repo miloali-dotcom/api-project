@@ -3,7 +3,7 @@
 // Img API: https://www.artic.edu/iiif/2/{identifier}/full/843,/0/default.jpg
 
 async function fetchArmorData(searchTerm) {
-    const response = await fetch(`https://api.artic.edu/api/v1/artworks/search?q=${searchTerm}&fields=title,artist_display,date_display,image_id`);
+    let response = await fetch(`https://api.artic.edu/api/v1/artworks/search?q=${searchTerm}&fields=title,artist_display,date_display,image_id,is_in_gallery`);
     const data = await response.json();
     return data.data; 
 }
@@ -66,6 +66,22 @@ document.getElementById('searchInput').addEventListener('keypress', function (e)
     if (e.key === 'Enter') {
         document.getElementById('searchButton').click();
     }
+});
+
+function filterGalleryWorks(data, showInGallery) {
+  return data.filter(armor => armor.is_in_gallery === showInGallery);
+}
+
+document.getElementById('filterButton').addEventListener('click', async() => {
+  const searchTerm = document.getElementById('searchInput').value;
+  
+  const allArmorData = await fetchArmorData(searchTerm);
+
+  const showInGallery = document.getElementById('galleryCheckbox').checked;
+
+  const filteredArmor = filterGalleryWorks(allArmorData, showInGallery);
+
+  displayArmor(filteredArmor);
 });
 
 const headers = {
