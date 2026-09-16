@@ -3,7 +3,7 @@
 // Img API: https://www.artic.edu/iiif/2/{identifier}/full/843,/0/default.jpg
 
 async function fetchArmorData(searchTerm) {
-    const response = await fetch(`https://api.artic.edu/api/v1/artworks/search?q=${searchTerm}&fields=title,artist_display,date_display,image_id`);
+    const response = await fetch(`https://api.artic.edu/api/v1/artworks/search?q=${searchTerm}&fields=title,artist_display,date_display,image_id,is_on_view`);
     const data = await response.json();
     return data.data; 
 }
@@ -35,10 +35,6 @@ function displayArmor(data) {
       date.className = 'date-made';
       date.textContent = armor.date_display || 'Date unknown';
 
-      const classification = document.createElement('p');
-      classification.className = 'classification-titles';
-      classification.textContent = armor.classification_titles || 'Off View';
-
       card.appendChild(title);
       card.appendChild(artist);
       card.appendChild(date);
@@ -60,7 +56,7 @@ document.getElementById('searchInput').addEventListener('keypress', function (e)
     }
 });
 
-document.getElementById('viewFilter')/addEventListener('change', () => {
+document.getElementById('viewFilter').addEventListener('change', () => {
   const searchTerm = document.getElementById('searchInput').value;
 
   fetchArmorData(searchTerm).then(data => filterArmor(data));
@@ -72,34 +68,15 @@ function filterArmor(data) {
   let filteredData;
 
   if (viewFilter === 'onView') {
-    filteredData = data.filter(armor => armor.is_in_gallery, true);
+    filteredData = data.filter(armor => armor.is_on_view, true);
   } else if (viewFilter === 'offView') {
-    filteredData = data.filter(armor => armor.is_in_gallery, false);
+    filteredData = data.filter(armor => armor.is_on_view, false);
   } else {
     filteredData = data;
   }
 
   displayArmor(filteredData);
 }
-
-// document.getElementById('armorFilter').addEventListener('change', function() {
-//   const selectedArms = this.value;
-//   filterArmors(selectedArms);
-// });
-
-// async function filterArmors(selectedArms) {
-//   const searchTerm = document.getElementById('searchInput').value;
-
-//   const allArmors = await fetchArmorData(searchTerm);
-
-//   let filteredArmors;
-
-//   if (selectedArms) {
-//     filteredArmors = allArmors.filter(armor => armor.classification_titles === selectedArms);
-//   }
-  
-//   displayArmor(filteredArmors);
-// }
 
 const headers = {
     'AIC-User-Agent': 'aic-armory (yali@artic.edu)'
