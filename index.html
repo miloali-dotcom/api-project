@@ -6,7 +6,7 @@
   <title>AIC Armory</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://kit.fontawesome.com/2348052fee.js" crossorigin="anonymous"></script>
-  <script src="index.js" defer></script>
+  <script type="module" src="index.js" defer></script>
 </head>
 <body>
   <section id="landing">
@@ -47,10 +47,22 @@
         </div>
       </div>
       <div class="filter-container">
-        <label>
-          <input type="checkbox" id="galleryCheckbox"> Currently On Display
-        </label>
+        <label for="viewFilter">Filter by View</label>
+        <select id="viewFilter">
+          <option value="all">All Armor</option>
+          <option value="onView">On View</option>
+          <option value="offView">Off View</option>
+        </select>
       </div>
+      <!-- <div class="filter-container">
+        <label for="armorFilter" class="filter-name">Filter by Arms</label>
+        <select class="armor-filter" id="armorFilter">
+          <option value="arms and armor">All Arms and Armor</option>
+          <option value="suits">Suits</option>
+          <option value="suit-helmet">Helmets</option>
+          <option value="edged weapon-sword">Swords</option>
+        </select>
+      </div> -->
     </header>
     
     <div id="resultsContainer">

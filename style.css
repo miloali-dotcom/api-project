@@ -211,12 +211,26 @@ button {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 24px;
+}
+
+.filter-name {
+  font-size: 16px;
+  padding-right: 24px;
+}
+
+.armor-filter {
+  font-size: 16px;
+  border-color: #52b7b3;
+  background-color: #52b7b3;
+  color: white;
   cursor: pointer;
 }
 
-.sort__filter:hover {
+.armor-filter:hover {
   border-color: #201e1f;
+  background-color: transparent;
   color: #201e1f;
+  transition: all 300ms ease;
 }
 
 /*
@@ -241,7 +255,12 @@ ARMOR
   width: 250px;
   padding: 15px;
   text-align: left;
+}
+
+.armor-container:hover {
+  transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 300ms ease-in-out;
 }
 
 .armor-image {
@@ -267,3 +286,10 @@ FOOTER
   display: flex;
   color: #52b7b3;
 }
+
+/*
+
+MEDIA
+
+*/
+

@@ -3,7 +3,7 @@
 // Img API: https://www.artic.edu/iiif/2/{identifier}/full/843,/0/default.jpg
 
 async function fetchArmorData(searchTerm) {
-    let response = await fetch(`https://api.artic.edu/api/v1/artworks/search?q=${searchTerm}&fields=title,artist_display,date_display,image_id,is_in_gallery`);
+    const response = await fetch(`https://api.artic.edu/api/v1/artworks/search?q=${searchTerm}&fields=title,artist_display,date_display,image_id`);
     const data = await response.json();
     return data.data; 
 }
@@ -11,7 +11,7 @@ async function fetchArmorData(searchTerm) {
 function displayArmor(data) {
     const resultsContainer = document.getElementById('resultsContainer');
     resultsContainer.innerHTML = '';
-    //const limitedResults = data.slice(0, 6);
+   
     data.slice(0, 6).forEach(armor => {
       const card = document.createElement('div');
       card.className = 'armor-container';
@@ -20,7 +20,7 @@ function displayArmor(data) {
       image.className = 'armor-image';
       image.alt = armor.title || 'Armor image';
       if (armor.image_id) {
-        image.src = `https://www.artic.edu/iiif/2/{identifier}/full/200,/0/default.jpg`;
+        image.src = `https://www.artic.edu/iiif/2/${armor.image_id}/full/200,/0/default.jpg`;
         card.appendChild(image);
       }
       const title = document.createElement('h3');
@@ -35,22 +35,14 @@ function displayArmor(data) {
       date.className = 'date-made';
       date.textContent = armor.date_display || 'Date unknown';
 
+      const classification = document.createElement('p');
+      classification.className = 'classification-titles';
+      classification.textContent = armor.classification_titles || 'Off View';
+
       card.appendChild(title);
       card.appendChild(artist);
       card.appendChild(date);
       resultsContainer.appendChild(card);
-    
-    //limitedResults.forEach(armor => {
-        // const armorContainer = document.getElementClassName('armor-container');
-
-        // const armorImage = document.getElementClassName('armor-image');
-        // armorImage.src = `https://www.artic.edu/iiif/2/${armor.image_id}/full/843,/0/default.jpg`;
-
-        // const armorTitle = document.getElementClassName('armor-title');
-
-        // const artistName = document.getElementClassName('armor-artist');
-
-        // const dateMade = document.getElementClassName('armor-date');
     });
 }
 
@@ -59,7 +51,7 @@ document.getElementById('searchButton').addEventListener('click', async () => {
     const armorData = await fetchArmorData(searchInput);
     console.log('api results:', armorData);
     displayArmor(armorData);
-    console.log('cards on page:', document.getElementById('resultsContainer').children.length)
+    console.log('cards on page:', document.getElementById('resultsContainer').children.length);
 });
 
 document.getElementById('searchInput').addEventListener('keypress', function (e) {
@@ -68,21 +60,46 @@ document.getElementById('searchInput').addEventListener('keypress', function (e)
     }
 });
 
-function filterGalleryWorks(data, showInGallery) {
-  return data.filter(armor => armor.is_in_gallery === showInGallery);
+document.getElementById('viewFilter')/addEventListener('change', () => {
+  const searchTerm = document.getElementById('searchInput').value;
+
+  fetchArmorData(searchTerm).then(data => filterArmor(data));
+});
+
+function filterArmor(data) {
+  const viewFilter = document.getElementById('viewFilter').value;
+
+  let filteredData;
+
+  if (viewFilter === 'onView') {
+    filteredData = data.filter(armor => armor.is_in_gallery, true);
+  } else if (viewFilter === 'offView') {
+    filteredData = data.filter(armor => armor.is_in_gallery, false);
+  } else {
+    filteredData = data;
+  }
+
+  displayArmor(filteredData);
 }
 
-document.getElementById('filterButton').addEventListener('click', async() => {
-  const searchTerm = document.getElementById('searchInput').value;
+// document.getElementById('armorFilter').addEventListener('change', function() {
+//   const selectedArms = this.value;
+//   filterArmors(selectedArms);
+// });
+
+// async function filterArmors(selectedArms) {
+//   const searchTerm = document.getElementById('searchInput').value;
+
+//   const allArmors = await fetchArmorData(searchTerm);
+
+//   let filteredArmors;
+
+//   if (selectedArms) {
+//     filteredArmors = allArmors.filter(armor => armor.classification_titles === selectedArms);
+//   }
   
-  const allArmorData = await fetchArmorData(searchTerm);
-
-  const showInGallery = document.getElementById('galleryCheckbox').checked;
-
-  const filteredArmor = filterGalleryWorks(allArmorData, showInGallery);
-
-  displayArmor(filteredArmor);
-});
+//   displayArmor(filteredArmors);
+// }
 
 const headers = {
     'AIC-User-Agent': 'aic-armory (yali@artic.edu)'
